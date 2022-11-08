@@ -88,7 +88,7 @@ function createHtml(htmlPath, templatePatch, componentsPatch){
         if (line.match(regTag)!== null) {
             componentData.forEach((item) =>{
                 if (line.match(regTag)[0].slice(2, -2) === item.name) {
-                    outputTemplate.write(item.data + '\n');
+                    outputTemplate.write(shiftText(item.data, line.match(regTag).index) + '\n');
                 }
             });                             
           
@@ -98,6 +98,16 @@ function createHtml(htmlPath, templatePatch, componentsPatch){
         
     });
      
+};
+
+function shiftText(text, valueShift){
+   let arrText = text.split('\n');
+   let spaceShift =' '.repeat(valueShift);
+   let arrResult =[];
+   arrText.forEach((line) => {
+        arrResult.push(spaceShift + line);
+   }) 
+   return arrResult.join('\n'); 
 };
 
 let clearDir = createDirProject(dirProject);
